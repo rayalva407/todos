@@ -26,7 +26,7 @@ public class TodoListController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<TodoList>> getMethodName() {
+    public ResponseEntity<List<TodoList>> getAllTodoLists() {
         return new ResponseEntity<>(todoListService.findAll(), HttpStatus.OK);
     }
     
