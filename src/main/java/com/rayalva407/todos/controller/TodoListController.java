@@ -1,5 +1,6 @@
 package com.rayalva407.todos.controller;
 
+import com.rayalva407.todos.model.Todo;
 import com.rayalva407.todos.model.TodoList;
 import com.rayalva407.todos.service.TodoListService;
 
@@ -8,11 +9,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -34,5 +31,10 @@ public class TodoListController {
     @PostMapping("/create")
     public ResponseEntity<TodoList> createTodoList(@RequestBody TodoList todoList) {
         return new ResponseEntity<>(todoListService.createTodoList(todoList), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{todoListId}/todos/create")
+    public ResponseEntity<Todo> createTodo(@RequestBody Todo todo, @PathVariable Long todoListId) {
+        return new ResponseEntity<>(todoListService.createTodo(todo, todoListId), HttpStatus.CREATED);
     }
 }

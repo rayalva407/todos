@@ -1,5 +1,6 @@
 package com.rayalva407.todos.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,18 +15,19 @@ public class Todo {
 
     private String description;
 
-    private String status;
+    private boolean completed;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "todo_list_id", nullable = false)
+    @JsonBackReference
     private TodoList todoList;
 
     public Todo() {}
 
-    public Todo(String title, String description, String status) {
+    public Todo(String title, String description) {
         this.title = title;
         this.description = description;
-        this.status = status;
+        this.completed = false;
     }
 
     public Long getId() { return id; }
@@ -37,8 +39,8 @@ public class Todo {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public boolean getStatus() { return completed; }
+    public void setStatus(boolean completed) { this.completed = completed; }
 
     public TodoList getTodoList() { return todoList; }
     public void setTodoList(TodoList todoList) { this.todoList = todoList; }

@@ -1,5 +1,6 @@
 package com.rayalva407.todos.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class TodoList {
     private String title;
 
     @OneToMany(mappedBy = "todoList", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Todo> todos;
 
     public TodoList() {}
