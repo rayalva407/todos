@@ -36,4 +36,9 @@ public class TodoListController {
     public ResponseEntity<Todo> createTodo(@RequestBody Todo todo, @PathVariable Long todoListId) {
         return new ResponseEntity<>(todoListService.createTodo(todo, todoListId), HttpStatus.CREATED);
     }
+
+    @PatchMapping("/update")
+    public ResponseEntity<TodoList> updateTodoList(@RequestBody TodoList todoListDetails) {
+        return new ResponseEntity<>(todoListService.updateTodoList(todoListDetails), HttpStatus.OK);
+    }
 }

@@ -29,6 +29,17 @@ public class TodoListService {
         return todoListRepository.save(todoList);
     }
 
+    public TodoList updateTodoList(TodoList todoList) {
+        Optional<TodoList> unverifiedTodoList = todoListRepository.findById(todoList.getId());
+        TodoList existingTodoList = unverifiedTodoList.orElseThrow();
+
+        if (todoList.getTitle() != null) {
+            existingTodoList.setTitle(todoList.getTitle());
+        }
+
+        return todoListRepository.save(existingTodoList);
+    }
+
     public Todo createTodo(Todo todo, Long todoListId) {
         TodoList todoList = todoListRepository.findById(todoListId).orElseThrow();
         todo.setTodoList(todoList);
