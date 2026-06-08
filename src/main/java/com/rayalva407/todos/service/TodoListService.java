@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class TodoListService {
 
-    TodoListRepository todoListRepository;
-    TodoRepository todoRepository;
+    private final TodoListRepository todoListRepository;
+    private final TodoRepository todoRepository;
 
-    TodoListService(TodoListRepository todoListRepository, TodoRepository todoRepository) {
+    public TodoListService(TodoListRepository todoListRepository, TodoRepository todoRepository) {
         this.todoListRepository = todoListRepository;
         this.todoRepository = todoRepository;
     }

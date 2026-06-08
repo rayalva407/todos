@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/todo-lists")
 public class TodoListController {
 
-    TodoListService todoListService;
+    private final TodoListService todoListService;
 
-    TodoListController(TodoListService todoListService) {
+    public TodoListController(TodoListService todoListService) {
         this.todoListService = todoListService;
     }
 

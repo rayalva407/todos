@@ -17,8 +17,7 @@ public class TodoService {
     }
 
     public Todo updateTodo(Todo todoDetails, Long todoId) {
-        Optional<Todo> unverifiedTodo = todoRepository.findById(todoId);
-        Todo existingTodo = unverifiedTodo.orElseThrow(() -> new EntityNotFoundException("Todo not found with id " + todoId));
+        Todo existingTodo = todoRepository.findById(todoId).orElseThrow(() -> new EntityNotFoundException("Todo not found with id " + todoId));
 
         if (todoDetails.getTitle() != null) {
             existingTodo.setTitle(todoDetails.getTitle());
