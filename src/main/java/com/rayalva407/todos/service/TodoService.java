@@ -1,6 +1,8 @@
 package com.rayalva407.todos.service;
 
 import com.rayalva407.todos.model.Todo;
+import com.rayalva407.todos.model.TodoList;
+import com.rayalva407.todos.repository.TodoListRepository;
 import com.rayalva407.todos.repository.TodoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -11,9 +13,17 @@ import java.util.Optional;
 public class TodoService {
 
     private final TodoRepository todoRepository;
+    private final TodoListRepository todoListRepository;
 
-    public TodoService(TodoRepository todoRepository) {
+    public TodoService(TodoRepository todoRepository, TodoListRepository todoListRepository) {
         this.todoRepository = todoRepository;
+        this.todoListRepository = todoListRepository;
+    }
+
+    public Todo createTodo(Todo todo, Long todoListId) {
+        TodoList todoList = todoListRepository.findById(todoListId).orElseThrow();
+        todo.setTodoList(todoList);
+        return todoRepository.save(todo);
     }
 
     public Todo updateTodo(Todo todoDetails, Long todoId) {

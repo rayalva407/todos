@@ -16,12 +16,10 @@ import org.springframework.stereotype.Service;
 public class TodoListService {
 
     private final TodoListRepository todoListRepository;
-    private final TodoRepository todoRepository;
     private final UserRepository userRepository;
 
-    public TodoListService(TodoListRepository todoListRepository, TodoRepository todoRepository, UserRepository userRepository) {
+    public TodoListService(TodoListRepository todoListRepository, UserRepository userRepository) {
         this.todoListRepository = todoListRepository;
-        this.todoRepository = todoRepository;
         this.userRepository = userRepository;
     }
 
@@ -48,9 +46,5 @@ public class TodoListService {
         return todoListRepository.save(existingTodoList);
     }
 
-    public Todo createTodo(Todo todo, Long todoListId) {
-        TodoList todoList = todoListRepository.findById(todoListId).orElseThrow();
-        todo.setTodoList(todoList);
-        return todoRepository.save(todo);
-    }
+
 }

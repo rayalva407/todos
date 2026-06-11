@@ -7,13 +7,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/todos")
 public class TodoController {
 
     private final TodoService todoService;
 
     public TodoController(TodoService todoService) {
         this.todoService = todoService;
+    }
+
+    @PostMapping("/todoList/{todoListId}/todos")
+    public ResponseEntity<Todo> createTodo(@RequestBody Todo todo, @PathVariable Long todoListId) {
+        return new ResponseEntity<>(todoService.createTodo(todo, todoListId), HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{todoId}")
