@@ -21,11 +21,21 @@ public class JwtService {
     public String generateToken(String username) {
         SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
 
-        return Jwts
-                .builder()
+        return Jwts.builder()
                 .subject(username)
                 .expiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(key)
                 .compact();
+    }
+
+    public String extractUsername(String token) {
+        SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
+
+        return Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
     }
 }
