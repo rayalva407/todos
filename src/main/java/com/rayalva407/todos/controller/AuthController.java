@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,14 +23,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User loginUser, @CookieValue(name = "accessToken", required = false) String existingToken) {
-        if (existingToken != null) {
+    public ResponseEntity<?> login(@RequestBody User loginUser, @AuthenticationPrincipal String currentUsername) {
+        if (currentUsername != null) {
             return new ResponseEntity<>("You are already logged in", HttpStatus.BAD_REQUEST);
         }
 
         try {
             User authenticatedUser = authService.authenticate(loginUser);
-
             String loginToken = jwtService.generateToken(authenticatedUser.getUsername());
 
             ResponseCookie jwtCookie = ResponseCookie.from("accessToken", loginToken)
@@ -52,7 +52,11 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout() {
+    public ResponseEntity<?> logout(@AuthenticationPrincipal String currentUsername) {
+        if (currentUsername == null) {
+            return new ResponseEntity<>("You are not logged in", HttpStatus.BAD_REQUEST);
+        }
+
         ResponseCookie logoutCookie = ResponseCookie.from("accessToken", "")
                 .httpOnly(true)
                 .secure(false)

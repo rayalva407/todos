@@ -1,14 +1,11 @@
 package com.rayalva407.todos.service;
 
-import com.rayalva407.todos.model.Todo;
 import com.rayalva407.todos.model.TodoList;
 import com.rayalva407.todos.model.User;
 import com.rayalva407.todos.repository.TodoListRepository;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.rayalva407.todos.repository.TodoRepository;
 import com.rayalva407.todos.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +33,7 @@ public class TodoListService {
     }
 
     public TodoList updateTodoList(TodoList todoList) {
-        Optional<TodoList> unverifiedTodoList = todoListRepository.findById(todoList.getId());
-        TodoList existingTodoList = unverifiedTodoList.orElseThrow();
+        TodoList existingTodoList = todoListRepository.findById(todoList.getId()).orElseThrow();
 
         if (todoList.getTitle() != null) {
             existingTodoList.setTitle(todoList.getTitle());
