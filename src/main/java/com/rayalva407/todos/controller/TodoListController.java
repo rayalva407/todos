@@ -1,10 +1,12 @@
 package com.rayalva407.todos.controller;
 
+import com.rayalva407.todos.model.Todo;
 import com.rayalva407.todos.model.TodoList;
 import com.rayalva407.todos.service.TodoListService;
 
 import java.util.List;
 
+import com.rayalva407.todos.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,24 +18,30 @@ import org.springframework.web.bind.annotation.*;
 public class TodoListController {
 
     private final TodoListService todoListService;
+    private final TodoService todoService;
 
-    public TodoListController(TodoListService todoListService) {
+    public TodoListController(TodoListService todoListService, TodoService todoService) {
         this.todoListService = todoListService;
+        this.todoService = todoService;
     }
 
     @GetMapping()
     public ResponseEntity<List<TodoList>> getAllTodoLists() {
         return new ResponseEntity<>(todoListService.findAll(), HttpStatus.OK);
     }
-    
 
     @PostMapping
     public ResponseEntity<?> createTodoList(@RequestBody TodoList todoList, @AuthenticationPrincipal String username) {
         return new ResponseEntity<>(todoListService.createTodoList(todoList, username), HttpStatus.CREATED);
     }
 
-    @PatchMapping("/update")
-    public ResponseEntity<TodoList> updateTodoList(@RequestBody TodoList todoListDetails) {
-        return new ResponseEntity<>(todoListService.updateTodoList(todoListDetails), HttpStatus.OK);
+    @PatchMapping("/{id}")
+    public ResponseEntity<TodoList> updateTodoList(@PathVariable Long id, @RequestBody TodoList todoListDetails) {
+        return new ResponseEntity<>(todoListService.updateTodoList(id, todoListDetails), HttpStatus.OK);
+    }
+
+    @PostMapping("/{todoListId}/todos/")
+    public ResponseEntity<Todo> createTodo(@PathVariable Long todoListId, @RequestBody Todo todo) {
+        return new ResponseEntity<>(todoService.createTodo(todoListId, todo), HttpStatus.CREATED);
     }
 }

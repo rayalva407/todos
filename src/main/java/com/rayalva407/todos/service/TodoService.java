@@ -7,8 +7,6 @@ import com.rayalva407.todos.repository.TodoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class TodoService {
 
@@ -20,9 +18,11 @@ public class TodoService {
         this.todoListRepository = todoListRepository;
     }
 
-    public Todo createTodo(Todo todo, Long todoListId) {
+    public Todo createTodo(Long todoListId, Todo todo) {
         TodoList todoList = todoListRepository.findById(todoListId).orElseThrow();
+
         todo.setTodoList(todoList);
+
         return todoRepository.save(todo);
     }
 

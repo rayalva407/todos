@@ -32,8 +32,8 @@ public class TodoListService {
         return todoListRepository.save(todoList);
     }
 
-    public TodoList updateTodoList(TodoList todoList) {
-        TodoList existingTodoList = todoListRepository.findById(todoList.getId()).orElseThrow();
+    public TodoList updateTodoList(Long id, TodoList todoList) {
+        TodoList existingTodoList = todoListRepository.findById(id).orElseThrow();
 
         if (todoList.getTitle() != null) {
             existingTodoList.setTitle(todoList.getTitle());
