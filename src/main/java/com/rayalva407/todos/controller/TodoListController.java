@@ -40,7 +40,7 @@ public class TodoListController {
         return new ResponseEntity<>(todoListService.updateTodoList(id, todoListDetails), HttpStatus.OK);
     }
 
-    @PostMapping("/{todoListId}/todos/")
+    @PostMapping("/{todoListId}/todos")
     public ResponseEntity<Todo> createTodo(@PathVariable Long todoListId, @RequestBody Todo todo) {
         return new ResponseEntity<>(todoService.createTodo(todoListId, todo), HttpStatus.CREATED);
     }
