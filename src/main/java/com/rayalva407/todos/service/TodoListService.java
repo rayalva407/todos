@@ -20,9 +20,11 @@ public class TodoListService {
         this.userRepository = userRepository;
     }
 
-    public List<TodoList> findAll() {
-        return todoListRepository.findAll();
+    public List<TodoList> findAllByUser(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow();
+        return user.getTodoLists();
     }
+
 
     public TodoList createTodoList(TodoList todoList, String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));

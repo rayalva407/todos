@@ -26,8 +26,8 @@ public class TodoListController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<TodoList>> getAllTodoLists() {
-        return new ResponseEntity<>(todoListService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<TodoList>> getAllTodoListsByUser(@AuthenticationPrincipal String username) {
+        return new ResponseEntity<>(todoListService.findAllByUser(username), HttpStatus.OK);
     }
 
     @PostMapping
