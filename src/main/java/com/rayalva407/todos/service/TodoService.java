@@ -35,8 +35,8 @@ public class TodoService {
         if (todoDetails.getDescription() != null) {
             existingTodo.setDescription(todoDetails.getDescription());
         }
-        if (todoDetails.getStatus() != existingTodo.getStatus()) {
-            existingTodo.setStatus(todoDetails.getStatus());
+        if (todoDetails.isCompleted() != existingTodo.isCompleted()) {
+            existingTodo.setCompleted(todoDetails.isCompleted());
         }
 
         return todoRepository.save(existingTodo);

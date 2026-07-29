@@ -39,8 +39,8 @@ public class Todo {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public boolean getStatus() { return completed; }
-    public void setStatus(boolean completed) { this.completed = completed; }
+    public boolean isCompleted() { return completed; }
+    public void setCompleted(boolean completed) { this.completed = completed; }
 
     public TodoList getTodoList() { return todoList; }
     public void setTodoList(TodoList todoList) { this.todoList = todoList; }
