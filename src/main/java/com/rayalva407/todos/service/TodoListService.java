@@ -8,8 +8,10 @@ import java.util.List;
 
 import com.rayalva407.todos.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class TodoListService {
 
     private final TodoListRepository todoListRepository;
@@ -25,7 +27,7 @@ public class TodoListService {
         return user.getTodoLists();
     }
 
-
+    @Transactional
     public TodoList createTodoList(TodoList todoList, String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -34,6 +36,7 @@ public class TodoListService {
         return todoListRepository.save(todoList);
     }
 
+    @Transactional
     public TodoList updateTodoList(Long id, TodoList todoList) {
         TodoList existingTodoList = todoListRepository.findById(id).orElseThrow();
 
@@ -41,7 +44,7 @@ public class TodoListService {
             existingTodoList.setTitle(todoList.getTitle());
         }
 
-        return todoListRepository.save(existingTodoList);
+        return existingTodoList;
     }
 
 

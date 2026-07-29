@@ -6,8 +6,10 @@ import com.rayalva407.todos.repository.TodoListRepository;
 import com.rayalva407.todos.repository.TodoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class TodoService {
 
     private final TodoRepository todoRepository;
@@ -18,6 +20,7 @@ public class TodoService {
         this.todoListRepository = todoListRepository;
     }
 
+    @Transactional
     public Todo createTodo(Long todoListId, Todo todo) {
         TodoList todoList = todoListRepository.findById(todoListId).orElseThrow();
 
@@ -26,6 +29,7 @@ public class TodoService {
         return todoRepository.save(todo);
     }
 
+    @Transactional
     public Todo updateTodo(Todo todoDetails, Long todoId) {
         Todo existingTodo = todoRepository.findById(todoId).orElseThrow(() -> new EntityNotFoundException("Todo not found with id " + todoId));
 
@@ -39,6 +43,6 @@ public class TodoService {
             existingTodo.setCompleted(todoDetails.isCompleted());
         }
 
-        return todoRepository.save(existingTodo);
+        return existingTodo;
     }
 }
