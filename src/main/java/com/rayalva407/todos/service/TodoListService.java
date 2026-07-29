@@ -28,8 +28,9 @@ public class TodoListService {
     }
 
     @Transactional
-    public TodoList createTodoList(TodoList todoList, String username) {
+    public TodoList createTodoList(String title, String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        TodoList todoList = new TodoList(title);
 
         todoList.setUser(user);
 
@@ -37,11 +38,11 @@ public class TodoListService {
     }
 
     @Transactional
-    public TodoList updateTodoList(Long id, TodoList todoList) {
+    public TodoList updateTodoList(Long id, String title) {
         TodoList existingTodoList = todoListRepository.findById(id).orElseThrow();
 
-        if (todoList.getTitle() != null) {
-            existingTodoList.setTitle(todoList.getTitle());
+        if (title != null) {
+            existingTodoList.setTitle(title);
         }
 
         return existingTodoList;

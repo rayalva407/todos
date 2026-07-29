@@ -1,13 +1,6 @@
 package com.rayalva407.todos.dto;
 
-public class UserResponseDto {
-    private String username;
+import jakarta.validation.constraints.NotNull;
 
-    public UserResponseDto(String username) {
-        this.username = username;
-    }
-
-    public String getUsername() { return username; }
-
-    public void setUsername(String username) { this.username = username; }
+public record UserResponseDto(@NotNull String username) {
 }

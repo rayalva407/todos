@@ -18,12 +18,13 @@ public class UserService {
     }
 
     @Transactional
-    public User create(User user) {
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+    public User create(String username, String password) {
+        if (userRepository.findByUsername(username).isPresent()) {
             throw new RuntimeException("Username already exists");
         }
 
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        User user = new User(username, bCryptPasswordEncoder.encode(password));
+
         return userRepository.save(user);
     }
 }

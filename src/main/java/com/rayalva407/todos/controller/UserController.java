@@ -1,5 +1,6 @@
 package com.rayalva407.todos.controller;
 
+import com.rayalva407.todos.dto.UserRequestDto;
 import com.rayalva407.todos.dto.UserResponseDto;
 import com.rayalva407.todos.model.User;
 import com.rayalva407.todos.service.JwtService;
@@ -23,9 +24,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody User user) {
+    public ResponseEntity<?> create(@RequestBody UserRequestDto createUserDto) {
         try {
-            User createdUser = userService.create(user);
+            User createdUser = userService.create(createUserDto.username(), createUserDto.password());
 
             String token = jwtService.generateToken(createdUser.getUsername());
 

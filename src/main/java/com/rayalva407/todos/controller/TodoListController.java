@@ -1,5 +1,6 @@
 package com.rayalva407.todos.controller;
 
+import com.rayalva407.todos.dto.TodoListRequestDto;
 import com.rayalva407.todos.model.Todo;
 import com.rayalva407.todos.model.TodoList;
 import com.rayalva407.todos.service.TodoListService;
@@ -31,13 +32,13 @@ public class TodoListController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createTodoList(@RequestBody TodoList todoList, @AuthenticationPrincipal String username) {
-        return new ResponseEntity<>(todoListService.createTodoList(todoList, username), HttpStatus.CREATED);
+    public ResponseEntity<?> createTodoList(@RequestBody TodoListRequestDto todoListRequestDto, @AuthenticationPrincipal String username) {
+        return new ResponseEntity<>(todoListService.createTodoList(todoListRequestDto.title(), username), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<TodoList> updateTodoList(@PathVariable Long id, @RequestBody TodoList todoListDetails) {
-        return new ResponseEntity<>(todoListService.updateTodoList(id, todoListDetails), HttpStatus.OK);
+    public ResponseEntity<TodoList> updateTodoList(@PathVariable Long id, @RequestBody TodoListRequestDto todoListRequestDto) {
+        return new ResponseEntity<>(todoListService.updateTodoList(id, todoListRequestDto.title()), HttpStatus.OK);
     }
 
     @PostMapping("/{todoListId}/todos")
