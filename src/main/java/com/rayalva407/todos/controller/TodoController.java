@@ -1,5 +1,6 @@
 package com.rayalva407.todos.controller;
 
+import com.rayalva407.todos.dto.TodoStatusDto;
 import com.rayalva407.todos.model.Todo;
 import com.rayalva407.todos.service.TodoService;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,11 @@ public class TodoController {
 
     public TodoController(TodoService todoService) {
         this.todoService = todoService;
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Todo> toggleTodoStatus(@PathVariable Long id, @RequestBody TodoStatusDto todoStatusDto) {
+        return new ResponseEntity<>(todoService.updateStatus(id, todoStatusDto.completed()), HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")

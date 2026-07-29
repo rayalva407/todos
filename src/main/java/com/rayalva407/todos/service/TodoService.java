@@ -30,6 +30,15 @@ public class TodoService {
     }
 
     @Transactional
+    public Todo updateStatus(Long todoId, boolean completed) {
+        Todo todo = todoRepository.findById(todoId).orElseThrow(() -> new EntityNotFoundException("Todo not found"));
+
+        todo.setCompleted(completed);
+
+        return todo;
+    }
+
+    @Transactional
     public Todo updateTodo(Todo todoDetails, Long todoId) {
         Todo existingTodo = todoRepository.findById(todoId).orElseThrow(() -> new EntityNotFoundException("Todo not found with id " + todoId));
 
@@ -38,9 +47,6 @@ public class TodoService {
         }
         if (todoDetails.getDescription() != null) {
             existingTodo.setDescription(todoDetails.getDescription());
-        }
-        if (todoDetails.isCompleted() != existingTodo.isCompleted()) {
-            existingTodo.setCompleted(todoDetails.isCompleted());
         }
 
         return existingTodo;
