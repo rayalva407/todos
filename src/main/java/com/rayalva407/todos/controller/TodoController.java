@@ -1,5 +1,6 @@
 package com.rayalva407.todos.controller;
 
+import com.rayalva407.todos.dto.TodoRequestDto;
 import com.rayalva407.todos.dto.TodoStatusDto;
 import com.rayalva407.todos.model.Todo;
 import com.rayalva407.todos.service.TodoService;
@@ -23,7 +24,7 @@ public class TodoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Todo> updateTodo(@RequestBody Todo todoDetails, @PathVariable Long id) {
-        return new ResponseEntity<>(todoService.updateTodo(todoDetails, id), HttpStatus.OK);
+    public ResponseEntity<Todo> updateTodo(@PathVariable Long id, @RequestBody TodoRequestDto todoRequestDto) {
+        return new ResponseEntity<>(todoService.updateTodo(id, todoRequestDto.title(), todoRequestDto.description()), HttpStatus.OK);
     }
 }

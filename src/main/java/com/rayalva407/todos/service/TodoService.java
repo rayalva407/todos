@@ -21,8 +21,9 @@ public class TodoService {
     }
 
     @Transactional
-    public Todo createTodo(Long todoListId, Todo todo) {
+    public Todo createTodo(Long todoListId, String title, String description) {
         TodoList todoList = todoListRepository.findById(todoListId).orElseThrow();
+        Todo todo = new Todo(title, description);
 
         todo.setTodoList(todoList);
 
@@ -39,14 +40,14 @@ public class TodoService {
     }
 
     @Transactional
-    public Todo updateTodo(Todo todoDetails, Long todoId) {
+    public Todo updateTodo(Long todoId, String title, String description) {
         Todo existingTodo = todoRepository.findById(todoId).orElseThrow(() -> new EntityNotFoundException("Todo not found with id " + todoId));
 
-        if (todoDetails.getTitle() != null) {
-            existingTodo.setTitle(todoDetails.getTitle());
+        if (title != null) {
+            existingTodo.setTitle(title);
         }
-        if (todoDetails.getDescription() != null) {
-            existingTodo.setDescription(todoDetails.getDescription());
+        if (description != null) {
+            existingTodo.setDescription(description);
         }
 
         return existingTodo;
