@@ -65,10 +65,11 @@ public class AuthController {
                 .sameSite("Lax")
                 .build();
 
+        UserResponseDto responseDto = new UserResponseDto("You are now logged out");
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .header(HttpHeaders.SET_COOKIE, logoutCookie.toString())
-                .body("You are now logged out");
+                .body(responseDto);
     }
 
 
