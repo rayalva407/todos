@@ -32,7 +32,7 @@ public class TodoListController {
         return new ResponseEntity<>(todoListService.findAllByUser(username), HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/{todoListId}/todos")
     public ResponseEntity<List<Todo>> getAllTodosByTodoList(@AuthenticationPrincipal String username, @PathVariable Long todoListId) {
         return new ResponseEntity<>(todoListService.findAllByTodoList(todoListId, username), HttpStatus.OK);
     }
