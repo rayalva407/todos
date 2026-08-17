@@ -1,5 +1,6 @@
 package com.rayalva407.todos.service;
 
+import com.rayalva407.todos.model.Todo;
 import com.rayalva407.todos.model.TodoList;
 import com.rayalva407.todos.model.User;
 import com.rayalva407.todos.repository.TodoListRepository;
@@ -7,8 +8,11 @@ import com.rayalva407.todos.repository.TodoListRepository;
 import java.util.List;
 
 import com.rayalva407.todos.repository.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Transactional(readOnly = true)
@@ -49,4 +53,9 @@ public class TodoListService {
     }
 
 
+    public List<Todo> findAllByTodoList(Long todoListId, String username) {
+        TodoList todoList = todoListRepository.findByIdAndUserUsername(todoListId, username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "List Not Found"));
+
+        return todoList.getTodos();
+    }
 }

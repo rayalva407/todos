@@ -27,9 +27,14 @@ public class TodoListController {
         this.todoService = todoService;
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<TodoList>> getAllTodoListsByUser(@AuthenticationPrincipal String username) {
         return new ResponseEntity<>(todoListService.findAllByUser(username), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Todo>> getAllTodosByTodoList(@AuthenticationPrincipal String username, @PathVariable Long todoListId) {
+        return new ResponseEntity<>(todoListService.findAllByTodoList(todoListId, username), HttpStatus.OK);
     }
 
     @PostMapping
